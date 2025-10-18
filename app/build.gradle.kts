@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.play.services.fitness)
     implementation(libs.legacy.support.v4)
     implementation(libs.lifecycle.viewmodel)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

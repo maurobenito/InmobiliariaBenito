@@ -37,7 +37,11 @@ public class ApiClient {
         return retrofit.create(InmoServicio.class);
     }
 
+    public static String leerToken(Context context){
+        SharedPreferences sp =  context.getSharedPreferences("token.xml", context.MODE_PRIVATE);
+        return sp.getString("token",null);
 
+    }
 
     public interface InmoServicio{
 

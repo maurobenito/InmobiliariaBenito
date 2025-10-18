@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nav_contrato"
         android:name="com.example.inmobiliariabenito.ui.contrato.ContratoFragment"
-        android:label="Contratos
+        android:label="Contratos"
         tools:layout="@layout/fragment_contrato" />
 
 

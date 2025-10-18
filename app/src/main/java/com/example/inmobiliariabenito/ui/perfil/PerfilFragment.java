@@ -13,9 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.inmobiliariabenito.R;
 import com.example.inmobiliariabenito.databinding.FragmentPerfilBinding;
-
+import com.example.inmobiliariabenito.Modelo.Propietario;
 public class PerfilFragment extends Fragment {
 
     private PerfilViewModel mViewModel;
@@ -43,27 +42,55 @@ public class PerfilFragment extends Fragment {
 
             }
         });
-        mViewModel .getmNombre().observe((getViewLifecycleOwner()), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.btPerfil.setText(s);
 
+        binding.btPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.cambioBoton(
+                        binding.btPerfil.getText().toString(),
+                        binding.etNombre.getText().toString(),
+                        binding.etApellido.getText().toString(),
+                        binding.etDni.getText().toString(),
+                        binding.etTelefono.getText().toString(),
+                        binding.etEmail.getText().toString()
+                );
             }
         });
-       binding.btPerfil.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               mViewModel.cambioBoton(binding.btPerfil.getText().toString());
-           }
-       });
-            return root;
+
+
+
+
+        mViewModel.propietario().observe((getViewLifecycleOwner()), new Observer<Propietario>() {
+            @Override
+            public void onChanged(Propietario p) {
+                binding.etNombre.setText(p.getNombre());
+                binding.etApellido.setText(p.getApellido());
+                binding.etDni.setText(p.getDni());
+                binding.etTelefono.setText(p.getTelefono());
+                binding.etEmail.setText(p.getEmail());
+            }
+
+
+        });
+        mViewModel.getmNombre().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String texto) {
+                binding.btPerfil.setText(texto);
+            }
+        });
+
+
+        mViewModel.obtenerPerfil();
+
+
+
+
+        return root;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        // TODO: Use the ViewModel
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
-
 }
