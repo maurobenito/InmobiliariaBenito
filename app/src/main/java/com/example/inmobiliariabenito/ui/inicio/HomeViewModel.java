@@ -45,8 +45,7 @@ public class HomeViewModel extends AndroidViewModel {
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
             googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            googleMap.addMarker(new MarkerOptions().position(SANLUIS).title("San Luis Capital"));
-            googleMap.addMarker(new MarkerOptions().position(ULP).title("Universidad de La Punta"));
+            googleMap.addMarker(new MarkerOptions().position(SANLUIS).title("Inmobiliaria Benito"));
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(SANLUIS)      // Sets the center of the map to Mountain View
                     .zoom(10)                   // Sets the zoom
