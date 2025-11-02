@@ -1,38 +1,49 @@
 package com.example.inmobiliariabenito.ui.contrato;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.inmobiliariabenito.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+
+import com.example.inmobiliariabenito.databinding.FragmentContratoBinding;
+import com.example.inmobiliariabenito.modelo.Inmueble;
+import com.example.inmobiliariabenito.ui.inmueble.InmuebleAdapter;
 
 public class ContratoFragment extends Fragment {
 
-    private ContratoViewModel mViewModel;
+    private FragmentContratoBinding binding;
+    private ContratoViewModel vm;
 
-    public static ContratoFragment newInstance() {
-        return new ContratoFragment();
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        binding = FragmentContratoBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        vm = new ViewModelProvider(this).get(ContratoViewModel.class);
+
+        // Observa los inmuebles con contrato activo
+        vm.getListaInmueblesConContrato().observe(getViewLifecycleOwner(), inmuebles -> {
+            InmuebleAdapter adapter = new InmuebleAdapter(inmuebles, getContext(), getLayoutInflater());
+            GridLayoutManager glm = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+            binding.listaContratos.setLayoutManager(glm);
+            binding.listaContratos.setAdapter(adapter);
+        });
+
+        // Carga inicial de inmuebles con contrato
+        vm.obtenerInmueblesConContrato();
+
+        return root;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_contrato, container, false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ContratoViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

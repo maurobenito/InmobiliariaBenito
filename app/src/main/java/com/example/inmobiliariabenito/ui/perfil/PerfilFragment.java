@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.inmobiliariabenito.databinding.FragmentPerfilBinding;
-import com.example.inmobiliariabenito.Modelo.Propietario;
+import com.example.inmobiliariabenito.modelo.Propietario;
 public class PerfilFragment extends Fragment {
 
     private PerfilViewModel mViewModel;

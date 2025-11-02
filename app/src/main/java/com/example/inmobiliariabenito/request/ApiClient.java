@@ -3,10 +3,16 @@ package com.example.inmobiliariabenito.request;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.inmobiliariabenito.Modelo.Propietario;
+import com.example.inmobiliariabenito.modelo.Contrato;
+import com.example.inmobiliariabenito.modelo.Inmueble;
+import com.example.inmobiliariabenito.modelo.Propietario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,11 +21,14 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
-public class ApiClient {
-    private static String BASE_URL="https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";
+public  class ApiClient {
+    public final static String BASE_URL="https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";
 
 
     public static void guardarToken(Context context, String token) {
@@ -43,7 +52,7 @@ public class ApiClient {
 
     }
 
-    public interface InmoServicio{
+    public interface InmoServicio {
 
         @FormUrlEncoded
         @POST("api/Propietarios/login")
@@ -55,8 +64,36 @@ public class ApiClient {
         @PUT("api/Propietarios/actualizar")
         Call<Propietario> ActualizarPropietario(@Header("Authorization") String token, @Body Propietario p);
 
+        @GET("api/Inmuebles")
+        Call<List<Inmueble>> getInmueble(@Header("Authorization") String token);
+
+        @PUT("api/Inmuebles/actualizar")
+        Call<Inmueble> actualizarInmueble(@Header("Authorization") String token, @Body Inmueble i);
+
+        @Multipart
+        @POST("api/Inmuebles/cargar")
+        Call<Inmueble> cargarInmueble(
+                @Header("Authorization") String token,
+                @Part MultipartBody.Part imagen,
+                @Part("inmueble") RequestBody inmuebleJson)
+                ;
+
+        // ✅ Nuevo método para obtener inmuebles con contrato vigente
+        @GET("api/Inmuebles/GetContratoVigente")
+        Call<List<Inmueble>> getInmueblesConContratoVigente(@Header("Authorization") String token);
+        @GET("api/contratos/inmueble/{id}")
+        Call<Contrato> getContratoPorInmueble(@Header("Authorization") String token,
+                @Path("id") int id
+        );
 
     }
-}
+    }
+
+
+
+
+
+
+
 
 

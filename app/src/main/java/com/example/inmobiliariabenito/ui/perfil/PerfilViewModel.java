@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.inmobiliariabenito.Modelo.Propietario;
+import com.example.inmobiliariabenito.modelo.Propietario;
 import com.example.inmobiliariabenito.request.ApiClient;
 
 import retrofit2.Call;
@@ -40,6 +40,28 @@ public class PerfilViewModel extends AndroidViewModel {
             mEstado.setValue(true);
             mNombre.setValue("GUARDAR");
         } else {
+
+            if (nombre.trim().isEmpty() || apellido.trim().isEmpty() || dni.trim().isEmpty()
+                    || telefono.trim().isEmpty() || mail.trim().isEmpty()) {
+                Toast.makeText(getApplication(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            if (!dni.matches("\\d+")) {
+                Toast.makeText(getApplication(), "El DNI debe contener solo números", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+                Toast.makeText(getApplication(), "Ingrese un correo electrónico válido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            mEstado.setValue(false);
+            mNombre.setValue("EDITAR");
             mEstado.setValue(false);
             mNombre.setValue("EDITAR");
 

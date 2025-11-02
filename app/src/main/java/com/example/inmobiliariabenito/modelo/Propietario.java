@@ -1,6 +1,7 @@
-package com.example.inmobiliariabenito.Modelo;
+package com.example.inmobiliariabenito.modelo;
 
 import java.io.Serializable;
+
 
 public class Propietario implements Serializable {
 

@@ -19,4 +19,5 @@
     <string name="InmobiliariaBenito" />
     <string name="Inmuebles" />
     <string name="inmuebles">Inmuebles</string>
+    <string name="superficie_m">Superficie (m²)</string>
 </resources>
